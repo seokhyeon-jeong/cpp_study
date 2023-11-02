@@ -44,7 +44,7 @@ class Queue
 				return -1;
 			if(b==0)
 				return theArray[theCapacity-1];
-			return theArray[b];
+			return theArray[b-1];
 		}
 		void resize(int newSize)
 		{
@@ -55,7 +55,7 @@ class Queue
 			delete[] newArray;
 			theCapacity = newSize;
 		}
-		
+/*	
 		void print() const
 		{
 			if(empty())
@@ -66,6 +66,7 @@ class Queue
 			cout << "f : " << f << "b : " << b << '\n';
 			cout << "---------------------------------------\n";
 		}
+*/	
 	private:
 		int* theArray;
 		int theSize;
@@ -73,50 +74,49 @@ class Queue
 		int f; //where to dequeue;
 		int b; //where to enqueue;
 
-		static const int SPARE_CAPACITY = 4;
+		static const int SPARE_CAPACITY = 64;
 };
 
-void run()
+void run(int N)
 {
-	int op, pushVal;
+	int pushVal;
+	string op;
+	map<string,int> m{{"push",1},{"pop",2},{"size",3},{"empty",4},{"front",5},{"back",6}};
 	Queue q;
-	cout << "(1) push X, (2) pop, (3) size, (4)empty, (5)front, (6)back\n";
-	cout << "op : ";
 	
-	while(true)
+	while(N--)
 	{
 		cin >> op;
-		switch(op)
+		switch(m[op])
 		{
 			case 1:
 				cin >> pushVal;
 				q.push(pushVal);
 				break;
 			case 2:
-				cout <<  "popped value : " <<  q.pop() << endl;
+				cout << q.pop() << endl;
 				break;
 			case 3:
-				cout << "size : " << q.size() << endl;
+				cout << q.size() << endl;
 				break;
 			case 4:
-				cout << "is Empty? : " <<q.empty() << endl;
+				cout << q.empty() << endl;
 				break;
 			case 5:
-				cout << "front Value : " << q.front() << endl;
+				cout << q.front() << endl;
 				break;
 			case 6:
-				cout << "back Value : " << q.back() << endl;
+				cout << q.back() << endl;
 				break;
 			default:
 				break;
 		}
-		q.print();
-		if(op==0)
-			break;
 	}
 }
 
 int main()
 {
-	run();
+	int N;
+	cin >> N;
+	run(N);
 }
