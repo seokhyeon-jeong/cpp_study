@@ -29,7 +29,9 @@ auto NGE(const vector<int>& a)
 
 int main()
 {
-	vector<int> v{3,5,2,7};
+	int N;
+	cin >> N;
+	auto v = getInput(N);
 	auto ret = NGE(v);
 	for(auto ele : ret)
 		cout << ele << ' ';
