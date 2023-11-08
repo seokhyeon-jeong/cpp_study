@@ -1,16 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-float postfix(int N)
+double postfix(int N)
 {
 	string input;
 	cin >> input;
 
-	vector<float> numbers(N);
+	vector<double> numbers(N);
 	for(int i=0; i<N; ++i)
 		cin >> numbers[i];
 
-	stack<float> stk;
+	stack<double> stk;
 	string op{"+-*/"};
 
 	for(char ch : input)
