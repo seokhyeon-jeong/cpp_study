@@ -1,9 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
+typedef unsigned long long ull;
 
-int fourNumbers(int A, int B, int C, int D)
+ull fourNumbers(ull A, ull B, ull C, ull D)
 {
-	int copyB(B), copyD(D);
+	ull copyB(B), copyD(D);
 	while(copyB)
 	{
 		A *= 10;
@@ -21,7 +22,7 @@ int fourNumbers(int A, int B, int C, int D)
 
 int main()
 {
-	int A,B,C,D;
+	ull A,B,C,D;
 	cin >> A >> B >> C >> D;
 	cout << fourNumbers(A,B,C,D) << endl;	
 }
