@@ -7,7 +7,7 @@ vector<uint> prime(uint M, uint N)
 {
 	vector<uint> ret{2};
 	vector<uint>::iterator it;
-	for(uint i=3; i<=N; i+=2)
+	for(uint i=3; i*i<=N; i+=2)
 	{
 		for(it=ret.begin();it!=ret.end();++it)
 			if(i%*it==0)
