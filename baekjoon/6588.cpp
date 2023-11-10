@@ -7,11 +7,11 @@ static vector<uint> prime{2,3,5,7};
 
 void pushPrime(uint target)
 {
-	bool isPrime=false;
+	bool isPrime=true;
 
-	for(uint n=prime.back(); n<=target; ++n)
+	for(uint n=prime.back()+1; n<=target; ++n)
 	{
-		for(uint i=1; prime[i]*prime[i]<=n; ++i)
+		for(uint i=0; prime[i]*prime[i]<=n; ++i)
 		{
 			if(n%prime[i]==0)
 			{
