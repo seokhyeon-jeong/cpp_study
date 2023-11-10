@@ -21,8 +21,8 @@ vector<uint> prime(uint M, uint N)
 		is_prime = true;
 	}
 	auto start=lower_bound(ret.begin(), ret.end(), M);
-
-	return vector<uint>{start,ret.end()};
+	auto last=upper_bound(ret.begin(), ret.end(), N);
+	return vector<uint>{start,last};
 }
 int main()
 {
