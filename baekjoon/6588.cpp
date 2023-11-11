@@ -1,69 +1,56 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef unsigned int uint;
-
-static set<uint> prime;
-
-void pushPrime(uint target)
+vector<int> generatePrimeNumbers(int n)
 {
-	bool isPrime=true;
+	vector<int> ret{2,3};
 
-	for(uint n=*prime.rbegin()+2; n<=target; n+=2)
+	for(int i=5; i<=n;i+=2)
 	{
-		for(auto it=prime.begin(); (*it)*(*it)<=n; ++it)
+		bool isPrime=true;
+		for(int prime=0; isPrime && ret[prime]*ret[prime]<=i; ++prime)
 		{
-			if(n%*it==0)
-			{
+			if(i % ret[prime] == 0)
 				isPrime=false;
-				break;
-			}
 		}
 		if(isPrime)
-			prime.insert(n);
-		isPrime=true;
+			ret.push_back(i);
 	}
+
+	return ret;
 }
 
-pair<int,int> Goldbach(uint n)
+void Goldbach(vector<int>& primes, int n)
 {
-	if(*prime.rbegin()<n)
-		pushPrime(n);
-
-	uint maxDiff=0;
-	pair<uint,uint> ret{-1,-1};
-	for(auto it=prime.begin();it!=prime.end(); ++it)
+	int a=-1, b=-1;
+	for(int i=0; i<primes.size(); ++i)
 	{
-		uint target=n-*it;
-		auto found=prime.find(target);
-		if(found!=prime.end())
+		int target=n-primes[i];
+		auto found=lower_bound(primes.begin(), primes.end(), target);
+
+		if(target==*found)
 		{
-			if(abs(static_cast<int>(*found-*it))>maxDiff)
-			{
-				ret = make_pair(*found,*it);
-				maxDiff=abs(static_cast<int>(*found-*it));
-			}
+			a=target;
+			b=primes[i];
+			break;
 		}
 	}
-	return ret;
+	if(a!=-1)
+		cout << n << " = " << a << " + " << b << '\n';
+	else
+		cout << "Goldbach's conjecture is wrong.\n";
 }
 
 int main()
 {
-	uint n;
-	prime.insert(2);
-	prime.insert(3);
-	prime.insert(5);
-	prime.insert(7);
+	auto primes=generatePrimeNumbers(1000000);
 	while(true)
 	{
+		int n;
 		cin >> n;
 		if(n==0)
 			break;
-		auto ret=Goldbach(n);
-		if(ret==pair{-1,-1})
-			cout << "Goldbach's conjecture is wrong.\n";
-		else
-			cout << n << " = " << ret.first << " + " << ret.second << '\n';
+		Goldbach(primes,n);
 	}
 }
+	
