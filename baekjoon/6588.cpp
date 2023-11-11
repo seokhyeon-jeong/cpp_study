@@ -1,56 +1,50 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> generatePrimeNumbers(int n)
+vector<int> generatePrime(const int n=1000001)
 {
-	vector<int> ret{2,3};
+	vector<int> prime{2,3};
 
-	for(int i=5; i<=n;i+=2)
+	for(int i=5; i<=n; i+=2)
 	{
 		bool isPrime=true;
-		for(int prime=0; isPrime && ret[prime]*ret[prime]<=i; ++prime)
+		for(int j=0; prime[j]*prime[j]<=i; ++j)
 		{
-			if(i % ret[prime] == 0)
+			if(i%prime[j]==0)
+			{
 				isPrime=false;
+				break;
+			}
 		}
 		if(isPrime)
-			ret.push_back(i);
+			prime.push_back(i);
 	}
 
-	return ret;
+	return prime;
 }
 
-void Goldbach(vector<int>& primes, int n)
+void Goldbach(const vector<int>& p, const int n)
 {
-	int a=-1, b=-1;
-	for(int i=0; i<primes.size(); ++i)
+	for(int i=3; i<=n; i+=2)
 	{
-		int target=n-primes[i];
-		auto found=lower_bound(primes.begin(), primes.end(), target);
-
-		if(target==*found)
+		if(binary_search(p.begin(), p.end(), n-i))
 		{
-			a=target;
-			b=primes[i];
-			break;
+			cout << n << " = " << i << " + " << n-i << '\n';
+			return;
 		}
 	}
-	if(a!=-1)
-		cout << n << " = " << a << " + " << b << '\n';
-	else
-		cout << "Goldbach's conjecture is wrong.\n";
+	puts("Goldbach's conjecture is wrong.");
 }
 
 int main()
 {
-	auto primes=generatePrimeNumbers(1000000);
+	int n;
+	auto p = generatePrime();
 	while(true)
 	{
-		int n;
 		cin >> n;
 		if(n==0)
 			break;
-		Goldbach(primes,n);
+		Goldbach(p, n);
 	}
 }
-	
