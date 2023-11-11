@@ -4,7 +4,9 @@ using namespace std;
 vector<int> generatePrime(const int n=1000001)
 {
 	vector<int> prime{2,3};
-
+	vector<int> primeSearch(n);
+	primeSearch[2]=1;
+	primeSearch[3]=1;
 	for(int i=5; i<=n; i+=2)
 	{
 		bool isPrime=true;
@@ -17,17 +19,21 @@ vector<int> generatePrime(const int n=1000001)
 			}
 		}
 		if(isPrime)
+		{
 			prime.push_back(i);
+			primeSearch[i]=1;
+		}
+
 	}
 
-	return prime;
+	return primeSearch;
 }
 
 void Goldbach(const vector<int>& p, const int n)
 {
 	for(int i=3; i<=n; i+=2)
 	{
-		if(binary_search(p.begin(), p.end(), n-i))
+		if(p[i]==1 && p[n-i]==1)
 		{
 			cout << n << " = " << i << " + " << n-i << '\n';
 			return;
