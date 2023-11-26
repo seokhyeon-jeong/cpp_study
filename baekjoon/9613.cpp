@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-inline unsigned gcd(unsigned a, unsigned b)
+typedef unsigned long long ull;
+inline ull gcd(ull a, ull b)
 {
 	if(a<b)
 		swap(a,b);
@@ -13,15 +13,15 @@ inline unsigned gcd(unsigned a, unsigned b)
 	return a;
 }
 
-unsigned sum_of_gcd(unsigned n)
+ull sum_of_gcd(ull n)
 {
-	unsigned *num = new unsigned[n];
-	unsigned ret=0;
-	for(unsigned i=0; i<n; ++i)
+	ull *num = new ull[n];
+	ull ret=0;
+	for(ull i=0; i<n; ++i)
 		cin >> num[i];
-	for(unsigned i=0; i<n; ++i)
+	for(ull i=0; i<n; ++i)
 	{
-		for(unsigned j=i+1; j<n; ++j)
+		for(ull j=i+1; j<n; ++j)
 		{
 			ret += gcd(num[i],num[j]);
 		}
@@ -32,11 +32,11 @@ unsigned sum_of_gcd(unsigned n)
 
 int main(void)
 {
-	unsigned t;
+	ull t;
 	cin >> t;
 	while(t--)
 	{
-		unsigned n;
+		ull n;
 		cin >> n;
 		cout << sum_of_gcd(n) << '\n';
 	}
