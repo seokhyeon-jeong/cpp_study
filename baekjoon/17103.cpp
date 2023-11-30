@@ -31,11 +31,15 @@ void generate_prime(void)
 const int goldbach(const int n)
 {
 	int ret=0;
-	for(int i=3; i<=n/2; i+=2)
+	int duplicate=0;
+	for(int i=3; i<=n; i+=2)
 	{
-		if(prime[i] && prime[n-i])
-			++ret;
+		ret += (prime[i] && prime[n-i]);
+		duplicate += (i == (n-i));
 	}
+	ret -= duplicate;
+	ret >>= 1;
+	ret += duplicate;
 	return ret;
 }
 
