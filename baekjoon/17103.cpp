@@ -32,6 +32,8 @@ const int goldbach(const int n)
 {
 	int ret=0;
 	int duplicate=0;
+	if(n==2)
+		return 1;
 	for(int i=3; i<=n; i+=2)
 	{
 		ret += (prime[i] && prime[n-i]);
