@@ -4,7 +4,7 @@
 const std::string negativeBase(int n)
 {
 	std::string ret;
-	while(n)
+	while(n!=0)
 	{
 		if(n%-2==0)
 		{
