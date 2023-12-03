@@ -1,18 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define INPUT_LIMIT 1000000
 
-vector<int> generatePrime(const int n=1000001)
+static vector<int> indexedPrime(INPUT_LIMIT+1,0);
+static vector<int> prime;
+
+void generatePrime()
 {
-	vector<int> prime{2,3};
-	vector<int> primeSearch(n);
-	primeSearch[2]=1;
-	primeSearch[3]=1;
-	for(int i=5; i<=n; i+=2)
+	prime.push_back(2);
+	prime.push_back(3);
+	indexedPrime[2]=indexedPrime[3]=1;
+	
+
+	for(size_t num=5; num<=INPUT_LIMIT; num+=2)
 	{
 		bool isPrime=true;
-		for(int j=0; prime[j]*prime[j]<=i; ++j)
+		for(size_t i=0; i<prime.size() && prime[i]*prime[i]<=num; ++i)
 		{
-			if(i%prime[j]==0)
+			if(num % prime[i] == 0)
 			{
 				isPrime=false;
 				break;
@@ -20,37 +25,38 @@ vector<int> generatePrime(const int n=1000001)
 		}
 		if(isPrime)
 		{
-			prime.push_back(i);
-			primeSearch[i]=1;
+			prime.push_back(num);
+			indexedPrime[num]=1;
 		}
-
 	}
-
-	return primeSearch;
 }
 
-void Goldbach(const vector<int>& p, const int n)
+void goldbach(const int n)
 {
-	for(int i=3; i<=n; i+=2)
+	for(size_t i=1; i<prime.size(); ++i)
 	{
-		if(p[i]==1 && p[n-i]==1)
+		auto ele=prime[i];
+		if(ele>=n)
 		{
-			cout << n << " = " << i << " + " << n-i << '\n';
-			return;
+			cout << "Goldbach's conjecture is wrong.\n";
+			break;
+		}
+		if(indexedPrime[ele]==1 && indexedPrime[n-ele]==1)
+		{
+			cout << n << " = " << ele << " + " << n-ele << '\n';
+			break;
 		}
 	}
-	puts("Goldbach's conjecture is wrong.");
 }
-
 int main()
 {
+	generatePrime();
 	int n;
-	auto p = generatePrime();
 	while(true)
 	{
 		cin >> n;
 		if(n==0)
 			break;
-		Goldbach(p, n);
+		goldbach(n);
 	}
 }
