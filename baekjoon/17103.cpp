@@ -2,52 +2,57 @@
 using namespace std;
 #define INPUT_LIMIT 1000000
 
-static vector<bool> prime(INPUT_LIMIT+1,false);
+static vector<int> indexedPrime(INPUT_LIMIT+1,0);
+static vector<int> prime;
 
-void generate_prime(void)
+void generatePrime()
 {
-	prime[2]=prime[3]=prime[5]=true;
-	for(int i=7; i<=INPUT_LIMIT; i+=2)
+	prime.push_back(2);
+	prime.push_back(3);
+	indexedPrime[2]=indexedPrime[3]=1;
+	
+
+	for(size_t num=5; num<=INPUT_LIMIT; num+=2)
 	{
-		int j=3;
-		for(; j*j<=i; j+=2)
+		bool isPrime=true;
+		for(size_t i=0; i<prime.size() && prime[i]*prime[i]<=num; ++i)
 		{
-			if(prime[j] && i%j==0)
+			if(num % prime[i] == 0)
 			{
-				prime[1]=true;
+				isPrime=false;
 				break;
 			}
 		}
-		if(prime[1])
+		if(isPrime)
 		{
-			prime[1]=false;
-		}
-		else
-		{
-			prime[i]=true;
+			prime.push_back(num);
+			indexedPrime[num]=1;
 		}
 	}
-}
-const int goldbach(const int n)
-{
-	int ret=0;
-	int duplicate=0;
-	if(n==2)
-		return 1;
-	for(int i=3; i<=n; i+=2)
-	{
-		ret += (prime[i] && prime[n-i]);
-		duplicate += (i == (n-i));
-	}
-	ret -= duplicate;
-	ret >>= 1;
-	ret += duplicate;
-	return ret;
 }
 
-int main(void)
+int goldbach(const int N)
 {
-	generate_prime();
+	int duplicated=0;
+	int ret=0;
+
+	for(size_t i=0; prime[i]<N && i<prime.size(); ++i)
+	{
+		auto partition=prime[i];
+		if(indexedPrime[partition]==1 && indexedPrime[N-partition]==1)
+		{
+			duplicated += (partition == (N-partition));
+			ret += 1*(i != (N-partition));
+		}
+	}
+	ret >>= 1;
+	
+	return ret+duplicated;
+}
+
+int main()
+{
+	generatePrime();
 	int T, N;
 	cin >> T;
 	while(T--)
@@ -55,6 +60,5 @@ int main(void)
 		cin >> N;
 		cout << goldbach(N) << '\n';
 	}
-	return 0;
 }
 
