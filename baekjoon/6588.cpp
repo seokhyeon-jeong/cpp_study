@@ -10,7 +10,7 @@ void eratosthenes(const int n=MAX_N)
 
 	auto sqrtn = int(std::sqrt(n));
 
-	for(auto i=3; i<=sqrtn; i+=2)
+	for(auto i=3; i<=sqrtn; ++i)
 	{
 		if(isPrime[i])
 		{
