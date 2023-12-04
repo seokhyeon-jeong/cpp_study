@@ -1,8 +1,9 @@
 #include <bits/stdc++.h>
 
-#define MAX_N 1000000
+#define MAX_N 1000001
 
 std::vector<bool> isPrime(MAX_N, true);
+std::vector<int> prime;
 
 void eratosthenes(const int n=MAX_N)
 {
@@ -10,10 +11,11 @@ void eratosthenes(const int n=MAX_N)
 
 	auto sqrtn = int(std::sqrt(n));
 
-	for(auto i=3; i<=sqrtn; ++i)
+	for(auto i=2; i<=sqrtn; ++i)
 	{
 		if(isPrime[i])
 		{
+			prime.push_back(i);
 			for(auto j=i*i; j<=n; j+=i)
 				isPrime[j]=false;
 		}
@@ -22,11 +24,13 @@ void eratosthenes(const int n=MAX_N)
 
 void goldbach(const int n)
 {
-	for(auto i=3; i<=n; i+=2)
+	for(auto ele : prime)
 	{
-		if(isPrime[i] && isPrime[n-i])
+		if(ele>=n)
+			break;
+		if(isPrime[n-ele])
 		{
-			std::cout << n << " = " << i << " + " << n-i << '\n';
+			std::cout << n << " = " << ele << " + " << n-ele << '\n';
 			return;
 		}
 	}
