@@ -1,64 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define INPUT_LIMIT 1000000
 
-static vector<int> indexedPrime(INPUT_LIMIT+1,0);
-static vector<int> prime;
+#define MAX_N 1000*1000
 
-void generatePrime()
-{
-	prime.push_back(2);
-	prime.push_back(3);
-	indexedPrime[2]=indexedPrime[3]=1;
-	
+unsigned char sieve[(MAX_N+7)/8];
 
-	for(size_t num=5; num<=INPUT_LIMIT; num+=2)
-	{
-		bool isPrime=true;
-		for(size_t i=0; i<prime.size() && prime[i]*prime[i]<=num; ++i)
-		{
-			if(num % prime[i] == 0)
-			{
-				isPrime=false;
-				break;
-			}
-		}
-		if(isPrime)
-		{
-			prime.push_back(num);
-			indexedPrime[num]=1;
-		}
-	}
+inline bool isPrime(int k){
+	return sieve[k>>3] & (1<<(k&7));
 }
 
-int goldbach(const int N)
-{
-	int duplicated=0;
-	int ret=0;
+inline void setComposite(int k){
+	sieve[k>>3] &= ~(1<<(k&7));
+}
 
-	for(size_t i=0; prime[i]<N && i<prime.size(); ++i)
-	{
-		auto partition=prime[i];
-		if(indexedPrime[partition]==1 && indexedPrime[N-partition]==1)
-		{
-			duplicated += (partition == (N-partition));
-			ret += 1*(i != (N-partition));
+void eratosthenes(){
+	memset(sieve, 0xff, sizeof(sieve));
+	setComposite(0);
+	setComposite(1);
+
+	int sqrtn=int(sqrt(MAX_N));
+	for(auto i=2; i<sqrtn; ++i){
+		if(isPrime(i)){
+			for(auto j=i*i; j<MAX_N; j+=i){
+				setComposite(j);
+			}
 		}
 	}
-	ret >>= 1;
-	
-	return ret+duplicated;
 }
 
 int main()
 {
-	generatePrime();
+	eratosthenes();
 	int T, N;
 	cin >> T;
 	while(T--)
 	{
+		int ret=0;
 		cin >> N;
-		cout << goldbach(N) << '\n';
+		int halfn=(N>>1);
+		for(auto i=3; i<=halfn; i+=2)
+			if(isPrime(i) && isPrime(N-i))
+				++ret;
+		printf("%d\n",ret);
 	}
 }
-
