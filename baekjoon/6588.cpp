@@ -27,7 +27,7 @@ int main()
 			break;
 		int halfn=(n>>1);
 		for(auto i=3; i<=halfn; i+=2){
-			if(isPrime(i) && isPrime(n-i)){
+			if(isPrime[i] && isPrime[n-i]){
 				printf("%d = %d + %d\n",n,i,n-i);
 				n=0;
 				break;
