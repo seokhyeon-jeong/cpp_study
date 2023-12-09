@@ -1,31 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MAX_N 1000*1000
+#define MAX_N 1000*1000+1
 
-unsigned char sieve[(MAX_N+7)/8];
-
-inline bool isPrime(int k){
-	return sieve[k>>3] & (1<<(k&7));
-}
-
-inline void setComposite(int k){
-	sieve[k>>3] &= ~(1<<(k&7));
-}
+bool isPrime[MAX_N];
 
 void eratosthenes(){
-	memset(sieve, 0xff, sizeof(sieve));
-	setComposite(0);
-	setComposite(1);
-
+	memset(isPrime, 1, sizeof(isPrime));
+	isPrime[0]=isPrime[1]=false;
+	
 	int sqrtn=int(sqrt(MAX_N));
-	for(auto i=2; i<sqrtn; ++i){
-		if(isPrime(i)){
-			for(auto j=i*i; j<MAX_N; j+=i){
-				setComposite(j);
-			}
-		}
-	}
+	for(auto i=2; i<=sqrtn; ++i)
+		if(isPrime[i])
+			for(auto j=i*i; j<=MAX_N; j+=i)
+				isPrime[j]=false;
 }
 
 int main()
