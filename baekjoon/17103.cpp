@@ -38,7 +38,7 @@ int main()
 		int ret=0;
 		cin >> N;
 		int halfn=(N>>1);
-		for(auto i=3; i<=halfn; i+=2)
+		for(auto i=2; i<=halfn; ++i)
 			if(isPrime(i) && isPrime(N-i))
 				++ret;
 		printf("%d\n",ret);
