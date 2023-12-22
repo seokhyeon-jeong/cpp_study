@@ -16,5 +16,5 @@ int main()
 {
 	int n,m;
 	cin >> n >> m;
-	cout << zeros(m) << endl;
+	cout << zeros(n)-zeros(n-m)-zeros(m) << endl;
 }

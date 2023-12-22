@@ -7,25 +7,22 @@ int cache[MAX_N];
 int N;
 
 int makeOne(int n){
-	int& ret=cache[n];
-	if(ret!=-1)
-		return ret;
-	if(n&0x1) // n is odd
-		return ret=1+min(makeOne(n%3),makeOne(n-1));
-	else	// n is even
-		return ret=1+min(makeOne(n>>1),makeOne(n-1));
+	for(int i=4; i<=n; ++i){
+		cache[i]=min(cache[i],makeOne(n-1)+1);
+		if(i%2==0)
+			cache[i]=min(cache[i],1+makeOne(n/2));
+		if(i%3==0)
+			cache[i]=min(cache[i],1+makeOne(n/3));
+	}
+	return cache[n];
 }
 
-int main(void)
+int main()
 {
 	memset(cache, -1, sizeof(cache));
-
-	cache[0]=std::numeric_limits<int>::max();
 	cache[1]=0;
-	
-	scanf("%d",&N);
-	
-	auto ret=makeOne(N);
+	cache[2]=cache[3]=1;
 
-	printf("%d\n",ret);
+	scanf("%d",&N);
+	printf("%d\n",makeOne(N));
 }

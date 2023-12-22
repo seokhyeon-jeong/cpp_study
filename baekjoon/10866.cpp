@@ -5,43 +5,38 @@ class Deque
 {
 	public:
 		Deque(const int initSize = SPARE_CAPACITY)
-			:theSize{0},theCapacity{0},f{0},b{0}
+			:theSize{0},theCapacity{initSize},f{-1},b{initSize}
 		{	theArray = new int[initSize];	}
 
 		void push_front(const int x)
 		{
 			if(theSize==theCapacity)
 				resize(theCapacity*2);
-			theArray[f--] = x;
-			f += theCapacity*(f<0);
+			f += theCapacity*(f==0);
+			theArray[--f] = x;
 			++theSize;
 		}
 		void push_back(const int x)
 		{
 			if(theSize==theCapacity)
 				resize(theCapacity*2);
-			theArray[b++] = x;
-			b -= theCapacity*(b>=theCapacity);
+			b -= theCapacity*(b==theCapacity);
+			theArray[++b] = x;
 			++theSize;
 		}
 		int pop_front()
 		{
 			if(empty())
 				return -1;
-			int retVal = theArray[f++];
-			f -= theCapacity*(f>=theCapacity);
-			--theSize;
-			return retVal;
+			return theArray[++f];
 		}
 		int pop_back()
 		{
 			if(empty())
 				return -1;
-			int retVal = theArray[b--];
-			b += theCapacity*(b<0);
-			--theSize;
-			return retVal;
+			return theArray[--b];
 		}
+		
 		int size() const
 		{	return theSize;	}
 		bool empty() const
@@ -56,10 +51,18 @@ class Deque
 		{
 			if(empty())
 				return -1;
-			if(b==0)
-				return theArray[theCapacity-1];
-			return theArray[b-1];
+			return theArray[b];
 		}
+		void resize(int newSize)
+		{
+			int* newArray = new int[newSize];
+			for(int i=0; i<theCapacity; ++i)
+				newArray[i] = theArray[i];
+			std::swap(newArray, theArray);
+			delete[] newArray;
+			theCapacity = newSize;
+		}
+
 		void print() const
 		{
 			for(int i=0; i<theCapacity; ++i)
@@ -88,6 +91,7 @@ void run()
 	Deque dq;
 	while(true)
 	{
+		cout << "op : ";
 		cin >> op;
 		if(op==0)
 			break;
@@ -119,8 +123,16 @@ void run()
 			case 8:
 				cout << "back val = " << dq.back() << endl;
 				break;
+			case 9:
+				dq.print();
+				break;
 			default :
 				break;
 		}
 	}
+}
+
+int main()
+{
+	run();
 }

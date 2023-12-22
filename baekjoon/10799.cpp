@@ -36,5 +36,6 @@ int main()
 {
 	string s;
 	cin >> s;
+
 	cout << cut_bars(s) << endl;
 }
