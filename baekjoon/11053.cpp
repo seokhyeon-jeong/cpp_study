@@ -5,8 +5,6 @@ int arr[1000], cache[1000];
 int n;
 
 int lis(int start){
-	if(start>=n)
-		return 0;
 	int& ret=cache[start];
 	if(ret!=-1)
 		return ret;
@@ -14,7 +12,7 @@ int lis(int start){
 	ret=1;
 	for(int next=start+1; next<n; ++next){
 		if(arr[start]<arr[next]){
-			return ret=max(ret, lis(next)+1);
+			ret=max(ret, lis(next)+1);
 		}
 	}
 	return ret;
