@@ -13,7 +13,13 @@ void solution(void){
 
 	for(int n=5; n<MAX_N; ++n){
 		int sqrtn=int(sqrt(n));
-		cache[n]=1+cache[n-sqrtn*sqrtn];
+		int copyn=n;
+		while(sqrtn!=0){
+			++cache[n];
+			copyn -= sqrtn*sqrtn;
+			sqrtn = int(sqrt(copyn));
+		}
+		cache[n] += cache[copyn];
 	}
 }
 
