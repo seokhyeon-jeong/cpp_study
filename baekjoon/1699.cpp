@@ -6,20 +6,13 @@ using namespace std;
 int cache[MAX_N];
 
 void solution(void){
-	cache[1]=1;
-	cache[2]=2;
-	cache[3]=3;
-	cache[4]=1;
+	for(int i=1; i<MAX_N; ++i)
+		cache[i] = i;
 
-	for(int n=5; n<MAX_N; ++n){
-		int sqrtn=int(sqrt(n));
-		int copyn=n;
-		while(sqrtn!=0){
-			++cache[n];
-			copyn -= sqrtn*sqrtn;
-			sqrtn = int(sqrt(copyn));
+	for(int i=1; i<MAX_N; ++i){
+		for(int j=1; j*j<=i; ++j){
+			cache[i] = min(cache[i], cache[i-j*j]+1);
 		}
-		cache[n] += cache[copyn];
 	}
 }
 
