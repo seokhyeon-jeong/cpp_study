@@ -3,24 +3,26 @@ using namespace std;
 
 int n, triangle[501][501], cache[501][501];
 
-int solution(int y, int x){
-	if(y==n-1)
-		return triangle[y][x];
-	int& ret=cache[y][x];
-	if(ret!=-1)
-		return ret;
-	
-	return max(solution(y+1,x),solution(y+1, x+1))+triangle[y][x];
+int solution(int n){
+	cache[0][0]=triangle[0][0];
+
+	for(int y=1; y<n; ++y){
+		cache[y][0]=cache[y-1][0]+triangle[y][0];
+		for(int x=1; x<y; ++x)
+			cache[y][x]=max(cache[y-1][x-1],cache[y-1][x])+triangle[y][x];
+		cache[y][y]=cache[y-1][y-2]+triangle[y][y];
+	}
+	int ret=-1;
+	for(int x=0; x<n; ++x)
+		if(cache[n-1][x]>ret)
+			ret=cache[n-1][x];
+	return ret;
 }
 
 int main(void){
-	memset(cache, -1, sizeof(cache));
 	cin >> n;
-	for(int i=0; i<n; ++i){
-		for(int j=0; j<i+1; ++j){
-			cin >> triangle[i][j];
-		}
-	}
-	n=solution(0,0);
-	cout << n << endl;
+	for(int y=0; y<n; ++y)
+		for(int x=0; x<=y; ++x)
+			scanf("%d",&triangle[y][x]);
+	cout << solution(n) << endl;
 }
