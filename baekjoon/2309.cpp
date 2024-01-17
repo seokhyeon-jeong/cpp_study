@@ -21,16 +21,14 @@ void solution(void){
 	for(int i=0; i<9; ++i){
 		for(int j=i+1; j<9; ++j){
 			if(a[i]+a[j]==sum){
-				a[i]=a[j]=-1;
-				break;
+				for(int k=0; k<9; ++k){
+					if(k!=i && k!=j)
+						cout << a[k] << '\n';
+				}
+				return;
 			}
 		}
-		if(a[i]+a[j]==sum)
-			break;
 	}
-	for(int i=0; i<9; ++i)
-		if(a[i]!=-1)
-			cout << a[i] << '\n';
 
 }
 
