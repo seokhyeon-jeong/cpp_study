@@ -9,17 +9,23 @@ void solution(void){
 		scanf("%d", &a[i]);
 		sum += a[i];
 	}
-	sort(a, a+9);
+	int i, j;
+	for(i=1; i<9; ++i){
+		int tmp=a[i];
+		for(j=i; j>0 && a[j-1]>tmp; --j)
+			a[j]=a[j-1];
+		a[j]=tmp;
+	}
 	sum -= 100;
 
-	int i=0, j=0;
-	for(; i<9; ++i)
-		for(j=i+1; j<9; ++j)
-			if(a[i]+a[j]==sum){
-				for(int k=0; k<9; ++k)
-					if(k!=i && k!=j)
-						cout << a[k] << '\n';
-			}
+	for(int i=0; i<9; ++i)
+		for(int j=i+1; j<9; ++j)
+			if(a[i]+a[j]==sum)
+				a[i]=a[j]=-1;
+	for(int i=0; i<9; ++i)
+		if(a[i]!=-1)
+			cout << a[i] << '\n';
+
 }
 
 int main(void){
