@@ -18,10 +18,16 @@ void solution(void){
 	}
 	sum -= 100;
 
-	for(int i=0; i<9; ++i)
-		for(int j=i+1; j<9; ++j)
-			if(a[i]+a[j]==sum)
+	for(int i=0; i<9; ++i){
+		for(int j=i+1; j<9; ++j){
+			if(a[i]+a[j]==sum){
 				a[i]=a[j]=-1;
+				break;
+			}
+		}
+		if(a[i]+a[j]==sum)
+			break;
+	}
 	for(int i=0; i<9; ++i)
 		if(a[i]!=-1)
 			cout << a[i] << '\n';
