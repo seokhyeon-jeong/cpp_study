@@ -16,12 +16,10 @@ void solution(void){
 	for(; i<9; ++i)
 		for(j=i+1; j<9; ++j)
 			if(a[i]+a[j]==sum){
-				a[i]=-1;
-				a[j]=-1;
+				for(int k=0; k<9; ++k)
+					if(k!=i && k!=j)
+						cout << a[k] << '\n';
 			}
-	for(int i=0; i<9; ++i)
-		if(a[i]!=-1)
-			cout << a[i] << endl;
 }
 
 int main(void){
