@@ -32,16 +32,17 @@ int main(void){
 	for(int y=0; y<N; ++y)
 		for(int x=0; x<N; ++x)
 			scanf(" %c", &board[y][x]);
-	int ret=1;	
-	for(int y=0; y<N-1; ++y){
-		for(int x=0; x<N-1; ++x){
+	int ret=1;
+	int y,x;
+	for(y=0; y<N-1; ++y){
+		for(x=0; x<N; ++x){
 			ret=max(ret,check(y,x));
-			if(board[y][x]!=board[y][x+1]){
+			if(x!=N-1 && board[y][x]!=board[y][x+1]){
 				swap(board[y][x],board[y][x+1]);
 				ret=max(ret,check(y,x));
 				swap(board[y][x],board[y][x+1]);
 			}
-			if(board[y][x]!=board[y+1][x]){
+			if(x==N-1 || board[y][x]!=board[y+1][x]){
 				swap(board[y][x],board[y+1][x]);
 				ret=max(ret,check(y,x));
 				swap(board[y][x],board[y+1][x]);
