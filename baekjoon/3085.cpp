@@ -40,11 +40,13 @@ int main(void){
 			if(x!=N-1 && board[y][x]!=board[y][x+1]){
 				swap(board[y][x],board[y][x+1]);
 				ret=max(ret,check(y,x));
+				ret=max(ret,check(y,x+1));
 				swap(board[y][x],board[y][x+1]);
 			}
 			if(x==N-1 || board[y][x]!=board[y+1][x]){
 				swap(board[y][x],board[y+1][x]);
 				ret=max(ret,check(y,x));
+				ret=max(ret,check(y+1,x));
 				swap(board[y][x],board[y+1][x]);
 			}
 		}
