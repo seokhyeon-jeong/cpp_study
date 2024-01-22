@@ -8,18 +8,14 @@ int gcd(int a, int b){
 	return gcd(b, a%b);
 }
 int solution(int M, int N, int x, int y){
-	int ret=1;
 	int lcm=(M/gcd(M,N))*N;
-	int year=1, month=1;
 
-	FOR(i, lcm){
-		++year;
-		++month;
-		year -= M*(year>M);
-		month -= N*(month>N);
-		++ret;
-		if(year==x && month==y)
-			return ret;
+	for(int i=x; i<=lcm; i+=M){
+		int ny=i%N;
+		if(ny==0)
+			ny=N;
+		if(ny==y)
+			return i;
 	}
 	return -1;
 }
