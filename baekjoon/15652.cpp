@@ -4,7 +4,7 @@ using namespace std;
 
 int N, M, visited[8], buffer[8];
 
-void solution(int depth){
+void solution(int start, int depth){
 	if(depth==M){
 		FOR(i,depth)
 			printf("%d ",buffer[i]+1);
@@ -12,14 +12,12 @@ void solution(int depth){
 		return;
 	}
 
-	for(auto i=depth; i<N; ++i){
-		visited[i]=-1;
+	for(auto i=start; i<N; ++i){
 		buffer[depth]=i;
-		solution(depth+1);
-		visited[i]=0;
+		solution(i, depth+1);
 	}
 }
 int main(void){
 	cin >> N >> M;
-	solution(0);
+	solution(0, 0);
 }
