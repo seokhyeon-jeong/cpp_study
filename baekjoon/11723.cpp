@@ -1,71 +1,48 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 #define FOR(i,n) for(auto i=0; i<(n); ++i)
-int M;
-class Solution
-{
-    public:
-        Solution() : S{0} {}
 
-        void add(int x){ S |= (1<<x); }
-        void remove(int x) { S &= ~(1<<x); }
-        int check(int x){
-            return (S & (1<<x))!=0;
-        }
-        void toggle(int x){
-            S ^= (1<<x);
-        }
-        void all(void){
-            S = (1<<20)-1;
-        }
-        void empty(void){
-            S = 0;
-        }
-    private:
-        unsigned S;
-};
-
-class UI
-{
-    public:
-        UI(Solution& s) : solution{s} {}
-        void run(int m){
-            FOR(i, m){
-                int x;
-                string op;
-                cin >> op;
-                if(op=="add"){
-                    cin >> x;
-                    solution.add(x);
-                } 
-                else if(op=="remove"){
-                    cin >> x;
-                    solution.remove(x);
-                }
-                else if(op=="check"){
-                    cin >> x;
-                    cout << solution.check(x) << '\n';
-                }
-                else if(op=="toggle"){
-                    cin >> x;
-                    solution.toggle(x);
-                }
-                else if(op=="all"){
-                    solution.all();
-                }
-                else if(op=="empty"){
-                    solution.empty();
-                }
-                else
-                    ;
-            }
-        }
-    private:
-        Solution& solution;
-};
 int main(void){
+    ios::sync_with_stdio(0); cin.tie(0);
+    int S=0, M=0, x=0;
+    string whatToDo;
+    map<string,int> op;
+    op["add"]=0;
+    op["remove"]=1;
+    op["check"]=2;
+    op["toggle"]=3;
+    op["all"]=4;
+    op["empty"]=5;
+    
     cin >> M;
-    Solution solution;
-    UI ui(solution);
-    ui.run(M);
+    FOR(i, M){
+        cin >> whatToDo;
+        switch(op[whatToDo]){
+            case 0:
+                cin >> x;
+                S |= (1<<x);
+                break;
+            case 1:
+                cin >> x;
+                S &= ~(1<<x);
+                break;
+            case 2:
+                cin >> x;
+                cout << '1';
+                cout << ((S & (1<<x))!=0) << '\n';
+                cout << '2';
+                break;
+            case 3:
+                cin >> x;
+                S ^= (1<<x);
+                break;
+            case 4:
+                S = (1<<21)-1;
+                break;
+            case 5:
+                S = 0;
+                break;
+        }
+    }
 }
+
