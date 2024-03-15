@@ -4,7 +4,7 @@ using namespace std;
 
 int N, S[20][20];
 int members[20], ret=987654321;
-void solution(int depth){
+void solution(int start, int depth){
     if(depth==N/2){
         int startTeam=0, linkTeam=0;
         FOR(start,N){
@@ -18,11 +18,11 @@ void solution(int depth){
         ret = min(ret, abs(startTeam-linkTeam));
         return;
     }
-    FOR(i,N){
+    for(int i=start+1; i<N; ++i){
         if(members[i]==1)
             continue;
         members[i]=1;
-        solution(depth+1);
+        solution(i, depth+1);
         members[i]=0;
     }
 }
@@ -31,6 +31,6 @@ int main(void){
     FOR(i,N)
         FOR(j,N)
             cin >> S[i][j];
-    solution(0);
+    solution(0, 0);
     cout << ret << endl;
 }
