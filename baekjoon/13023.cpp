@@ -7,7 +7,7 @@ vector<vector<int>> people(2001);
 int visited[2001], ret;
 
 void solution(int currentPerson, int depth){
-    if(depth==4){
+    if(depth==5){
         ++ret;
         return;
     } 
@@ -32,7 +32,9 @@ int main(void){
     }
 
     FOR(i,N){
+        visited[i]=1;
         solution(i,0);
+        visited[i]=0;
         if(ret>0)
             break;
     }
