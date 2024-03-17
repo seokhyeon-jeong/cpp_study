@@ -3,39 +3,38 @@ using namespace std;
 #define FOR(i,n) for(auto i=0; i<(n); ++i)
 
 int N, M;
-int ret, people[2000][2000], used[2000][2000];
+vector<vector<int>> people(2001);
+int visited[2001], ret;
 
-void solution(int y, int x, int depth){
+void solution(int currentPerson, int depth){
     if(depth==4){
         ++ret;
         return;
-    }
-    for(int nx=0; nx<N; ++nx){
-        if(people[y][nx]==0 || used[y][nx]==1)
+    } 
+    
+    for(auto nextFriend : people[currentPerson]){
+        if(visited[nextFriend]==1)
             continue;
-        used[y][nx]=1;
-        used[nx][y]=1;
-        solution(nx, 0, depth+1);
-        used[y][nx]=0;
-        used[nx][y]=0;
+        visited[nextFriend]=1;
+        solution(nextFriend, depth+1);
+        visited[nextFriend]=0;
     }
 }
 
 int main(void){
+    int person_1=0, person_2=0;
+    ret=0;
     cin >> N >> M;
-    int x=0, y=0;
-    FOR(i,M){
-        cin >> x >> y;
-        people[x][y]=1;
-        people[y][x]=1;
+    FOR(i, M){
+        cin >> person_1 >> person_2;
+        people[person_1].push_back(person_2);
+        people[person_2].push_back(person_1);
     }
-    FOR(y,N){
-        solution(y,0,0);
+
+    FOR(i,N){
+        solution(i,0);
         if(ret>0)
             break;
     }
-    if(ret>0)
-        cout << 1 << '\n';
-    else
-        cout << 0 << '\n';
+    cout << (ret>0) << endl;
 }
