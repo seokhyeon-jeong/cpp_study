@@ -10,7 +10,7 @@ int solution(int n){
 		cache[y][0]=cache[y-1][0]+triangle[y][0];
 		for(int x=1; x<y; ++x)
 			cache[y][x]=max(cache[y-1][x-1],cache[y-1][x])+triangle[y][x];
-		cache[y][y]=cache[y-1][y-2]+triangle[y][y];
+		cache[y][y]=cache[y-1][y-1]+triangle[y][y];
 	}
 	int ret=-1;
 	for(int x=0; x<n; ++x)

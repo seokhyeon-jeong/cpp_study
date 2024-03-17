@@ -15,7 +15,7 @@ bool solution(void){
 	while(a[i-1]>a[j])
 		--j;
 	swap(a[i-1],a[j]);
-	for(int left=i, right=N-1; left!=right; ++left,--right)
+	for(int left=i, right=N-1; left<right; ++left,--right)
 		swap(a[left],a[right]);
 	return true;
 }
@@ -28,7 +28,7 @@ int main(void){
 		FOR(i,N)
 			printf("%d ",a[i]);
 	else
-		putchar(-1);
+		cout << -1;	
 }
 
 

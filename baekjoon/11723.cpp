@@ -28,9 +28,7 @@ int main(void){
                 break;
             case 2:
                 cin >> x;
-                cout << '1';
                 cout << ((S & (1<<x))!=0) << '\n';
-                cout << '2';
                 break;
             case 3:
                 cin >> x;
