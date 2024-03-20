@@ -7,22 +7,22 @@ int dy[]={0,1,0,-1};
 int dx[]={1,0,-1,0};
 int visited[100][100]={0,};
 int m[100][100]={0,};
-int ret=0;
+int ret=987564321;
 
 void solution(int y, int x, int depth){
-    if(y==N-1 && x==M-1){
-        ret=min(ret,depht+1);
-        return;
-    }
-    
     FOR(next, 4){
         int ny=y+dy[next], nx=x+dx[next];
         if(ny<0 || ny>=N || nx<0 || nx>=M)
             continue;
+        if(ny==N-1 && nx==M-1){
+            ret=min(ret,depth+2);
+            return;
+        }
         if(visited[ny][nx]==1)
             continue;
         if(m[ny][nx]==0)
             continue;
+        
         visited[ny][nx]=1;
         solution(ny, nx, depth+1);
         visited[ny][nx]=0;
