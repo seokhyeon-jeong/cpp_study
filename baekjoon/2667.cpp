@@ -50,6 +50,7 @@ int main(void){
             }
         }
     }
+    sort(retBuf.begin(), ret.end());
     cout << retBuf.size() << '\n';
     for(auto ele : retBuf)
         cout << ele << '\n';
